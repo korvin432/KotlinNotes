@@ -19,7 +19,7 @@ abstract class NoteDatabase : RoomDatabase() {
             super.onOpen(db)
             INSTANCE?.let { database ->
                 scope.launch {
-                    populateDatabase(database.noteDao())
+                   // populateDatabase(database.noteDao())
                 }
             }
         }
@@ -29,9 +29,9 @@ abstract class NoteDatabase : RoomDatabase() {
             noteDao.deleteAll()
 
             // Add sample words.
-            var note = Note(null, "This is the title", "And this is the text of a note")
+            var note = Note("This is the title", "And this is the text of a note")
             noteDao.insert(note)
-            note = Note(null, "This is the second title", "And this is the text of a second note")
+            note = Note("This is the second title", "And this is the text of a second note")
             noteDao.insert(note)
 
         }

@@ -1,6 +1,7 @@
-package com.mindyapps.android.kotlinnotes
+package com.mindyapps.android.kotlinnotes.ui.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
@@ -26,5 +27,6 @@ class NoteViewModel(application: Application) : AndroidViewModel(application) {
 
     fun insert(note: Note) = viewModelScope.launch {
         repository.insert(note)
+        Log.d("qwwe", "inserting")
     }
 }
