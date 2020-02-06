@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
@@ -34,13 +36,18 @@ class NotesFragment : Fragment() {
         val context: Context = this.context ?: return rootView
 
         val recyclerView = rootView.findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = NotesAdapter(context)
+        val adapter = NotesAdapter(
+            context,
+            onClickListener = { _, note ->
+                val bundle = bundleOf("note" to note)
+                navController.navigate(R.id.action_notesFragment_to_newNoteFragment, bundle)
+            }
+        )
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         noteViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
         noteViewModel.allNotes.observe(viewLifecycleOwner, Observer { notes ->
-            // Update the cached copy of the words in the adapter.
             notes?.let { adapter.setNotes(it) }
         })
 
@@ -55,12 +62,7 @@ class NotesFragment : Fragment() {
         Log.d("qwwe", navController.currentDestination!!.label.toString())
 
         fab.setOnClickListener {
-            if (navController.currentDestination?.id == R.id.notesFragment) {
-                navController.navigate(R.id.action_notesFragment_to_newNoteFragment)
-            } else {
-                navController.navigate(R.id.action_notesFragment_to_newNoteFragment)
-                Log.d("qwwe", navController.currentDestination!!.label.toString())
-            }
+            navController.navigate(R.id.action_notesFragment_to_newNoteFragment, null)
         }
     }
 

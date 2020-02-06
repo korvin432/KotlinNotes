@@ -24,7 +24,16 @@ class NewNoteFragment : Fragment() {
 
     private lateinit var editTitle: EditText
     private lateinit var editText: EditText
+    private var note: Note? = null
     private lateinit var noteViewModel: NoteViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (arguments!!.get("note") != null){
+            note = arguments!!.getParcelable("note")
+        }
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,11 +44,12 @@ class NewNoteFragment : Fragment() {
 
         editTitle = rootView.findViewById(R.id.edit_title)
         editText = rootView.findViewById(R.id.edit_text)
+        editTitle.setText(note?.title)
+        editText.setText(note?.text)
 
         val button = rootView.findViewById<Button>(R.id.button_save)
 
         button.setOnClickListener {
-            Log.d("qwwe", "clicked")
             if (TextUtils.isEmpty(editTitle.text) && TextUtils.isEmpty(editText.text)) {
                 Toast.makeText(context, "Not saved", Toast.LENGTH_LONG).show()
             } else {

@@ -8,7 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mindyapps.android.kotlinnotes.data.Note
 
-class NotesAdapter internal constructor(context: Context) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
+class NotesAdapter internal constructor(
+    context: Context,
+    private val onClickListener: (View, Note) -> Unit
+) : RecyclerView.Adapter<NotesAdapter.NoteViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var notes = emptyList<Note>()
@@ -22,6 +25,7 @@ class NotesAdapter internal constructor(context: Context) : RecyclerView.Adapter
         val current = notes[position]
         holder.noteTitle.text = current.title
         holder.noteText.text = current.text
+        holder.itemView.setOnClickListener { view -> onClickListener.invoke(view, current) }
     }
 
     internal fun setNotes(notes: List<Note>) {
