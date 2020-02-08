@@ -1,5 +1,6 @@
 package com.mindyapps.android.kotlinnotes.data
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 
 class NotesRepository(private val noteDao: NoteDao) {
@@ -10,5 +11,10 @@ class NotesRepository(private val noteDao: NoteDao) {
 
     suspend fun insert(note: Note) {
         noteDao.insert(note)
+    }
+
+    suspend fun update(note: Note) {
+        Log.d("qwwe", "updating $note.id")
+        noteDao.update(note)
     }
 }

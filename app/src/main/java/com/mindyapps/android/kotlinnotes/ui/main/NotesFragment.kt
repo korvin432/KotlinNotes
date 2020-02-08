@@ -57,10 +57,7 @@ class NotesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = Navigation.findNavController(view)
-        Log.d("qwwe", navController.currentDestination!!.label.toString())
-
         fab.setOnClickListener {
             navController.navigate(R.id.action_notesFragment_to_newNoteFragment, null)
         }

@@ -25,12 +25,14 @@ class NewNoteFragment : Fragment() {
     private lateinit var editTitle: EditText
     private lateinit var editText: EditText
     private var note: Note? = null
+    private var isEdit: Boolean = false
     private lateinit var noteViewModel: NoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments!!.get("note") != null){
             note = arguments!!.getParcelable("note")
+            isEdit = true
         }
 
     }
@@ -56,8 +58,16 @@ class NewNoteFragment : Fragment() {
                 val title = editTitle.text.toString()
                 val text = editText.text.toString()
 
-                val note = Note(title, text)
-                noteViewModel.insert(note)
+                val note = Note()
+                note.text = text
+                note.title = title
+
+                if (isEdit){
+                    noteViewModel.update(note)
+
+                } else{
+                    noteViewModel.insert(note)
+                }
             }
             activity!!.onBackPressed()
         }
